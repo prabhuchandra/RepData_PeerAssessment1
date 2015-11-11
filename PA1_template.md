@@ -1,6 +1,5 @@
----
-title: "Reproducible Research: Peer Assessment 1"
----
+# Reproducible Research: Peer Assessment 1
+'''{r simulation}
 ## Loading and preprocessing the data
 activity <- read.csv("activity.csv", colClasses = c("numeric", "character", 
     "numeric"))
@@ -95,3 +94,4 @@ names(stepsByDay) <- c("interval", "daylevel", "steps")
 
 xyplot(steps ~ interval | daylevel, stepsByDay, type = "l", layout = c(1, 2), 
     xlab = "Interval", ylab = "Number of steps")
+'''
