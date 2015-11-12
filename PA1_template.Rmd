@@ -1,7 +1,11 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
 ---
 ## Loading and preprocessing the data
+```{r}
 activity <- read.csv("activity.csv", colClasses = c("numeric", "character", 
     "numeric"))
 head(activity)
@@ -10,8 +14,9 @@ names(activity)
 
 library(lattice)
 activity$date <- as.Date(activity$date, "%Y-%m-%d")
+```
 ## What is mean total number of steps taken per day?
-
+```{r}
 StepsTotal <- aggregate(steps ~ date, data = activity, sum, na.rm = TRUE)
 
 hist(StepsTotal$steps, main = "Total steps by day", xlab = "day", col = "red")
@@ -34,7 +39,9 @@ df <- data.frame(day, steps)
 head(df)
 
 hist(df$steps, main = "Total steps by day", xlab = "day", col = "green")
+```
 ## What is the average daily activity pattern?
+```{r}
 time_series <- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
 
 plot(row.names(time_series), time_series, type = "l", xlab = "5-min interval", 
@@ -44,8 +51,9 @@ plot(row.names(time_series), time_series, type = "l", xlab = "5-min interval",
 max_interval <- which.max(time_series)
 names(max_interval)
 
-
+```
 ## Imputing missing values
+```{r}
 activity_NA <- sum(is.na(activity))
 activity_NA
 
@@ -72,10 +80,10 @@ mean(StepsTotal2$steps)
 
 median(StepsTotal2$steps)
 
-
+```
 
 ## Are there differences in activity patterns between weekdays and weekends?
-
+```{r}
 day <- weekdays(activity$date)
 daylevel <- vector()
 for (i in 1:nrow(activity)) {
@@ -95,3 +103,4 @@ names(stepsByDay) <- c("interval", "daylevel", "steps")
 
 xyplot(steps ~ interval | daylevel, stepsByDay, type = "l", layout = c(1, 2), 
     xlab = "Interval", ylab = "Number of steps")
+```
